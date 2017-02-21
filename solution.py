@@ -14,7 +14,8 @@ boxes = cross(rows, cols)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
-diagonals_units = [list(map(lambda pair: ''.join(pair), zip(rows, cols))), list(map(lambda pair: ''.join(pair), zip(rows, reversed(cols))))]
+diagonals_units = [[a[0]+a[1] for a in zip(rows, cols)],        # diagonal 1
+                   [a[0]+a[1] for a in zip(rows, cols[::-1])]]  # diagonal 2
 unitlist = row_units + column_units + square_units + diagonals_units
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
@@ -90,10 +91,12 @@ def naked_twins(values):
     """
     for unit in unitlist:
         # Find all the groups with 2 elements in the group key and having > 1 elements in it
-        for key in [k for k, g in itertools.groupby(sorted([values[b] for b in unit if len(values[b]) == 2])) if len(list(g)) > 1]:
+        two_elements_only = sorted([values[b] for b in unit if len(values[b]) == 2])
+        twins = [k for k, g in itertools.groupby(two_elements_only) if len(list(g)) > 1]
+        for t in twins:
             # Remove group key elements from all the elements inside the unit
-            for box in [b for b in unit if values[b] != key]:
-                for digit in key:
+            for box in [b for b in unit if values[b] != t]:
+                for digit in t:
                     assign_value(values, box, values[box].replace(digit, ''))
     return values
 

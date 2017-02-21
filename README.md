@@ -3,11 +3,11 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: Naked Twins is an additional heuristic strategy in reducing the number of possible board configurations. The more strategies we have, the less number of nodes inside the search tree we have. It is significantly decrease the number of configurations to check before solution found.
+A: Naked Twins is an additional heuristic strategy in reducing the number of possible board configurations. The tenet of this strategy is: inside the unit it is not possible to have options from naked twins boxes (because 2 numbers are stuck inside them) somewhere else except these 2 boxes. So in case we found twins inside the unit we can remove these 2 options from the rest of the unit. It is significantly decrease the number of configurations to check before solution found.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: Diagonal sudoku problem adds 2 additional rules (constraints) to existing one. The more constraints we have, the more possible ways to apply our strategies (only choice/naked twins/etc).
+A: Diagonal sudoku problem adds 2 additional rules (constraints) to existing one: inside each from 2 main diagonals (A1-I9, I1-A9) the numbers 1 to 9 should all appear exactly once. In our case we just need to add 2 additional units (diagonals) to existing ones due to the same rule is applicable to all of them. The more constraints we have, the more possible ways to apply our strategies (only choice/naked twins/etc).
 
 ### Install
 
